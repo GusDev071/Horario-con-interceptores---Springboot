@@ -15,7 +15,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import tools.jackson.databind.ObjectMapper;
 
-@Component 
+@Component
 public class CalendarInterceptor implements HandlerInterceptor {
 
     @Value("${config.calendar.open}")
@@ -34,10 +34,10 @@ public class CalendarInterceptor implements HandlerInterceptor {
         System.out.println(hour);
         
         if (hour >= open && hour < close) {
-            StringBuilder message = new  StringBuilder("Bienvenido al horario de atencion a clientes!!");
+            StringBuilder message = new  StringBuilder("Bienvenido al horario de atencion a clientes!!. ");
             message.append("Atendemos desde las ");
             message.append(open);
-            message.append("hrs.");
+            message.append(" hrs.");
             message.append(" hasta las ");
             message.append(close);
             message.append(" hrs.");
@@ -48,17 +48,17 @@ public class CalendarInterceptor implements HandlerInterceptor {
 
 
         ObjectMapper mapper = new ObjectMapper();
-        Map<String, Object> data =new HashMap<>();
+        Map<String, String> data =new HashMap<>();
         StringBuilder  message = new StringBuilder("Cerrado, horario fuera de servicio. ");
         message.append("Por favor vuelva mañana, en un horario de ");
         message.append(open);
-        message.append("hrs.");
+        message.append(" hrs.");
         message.append(" hasta las ");
         message.append(close);
         message.append(" hrs.");
         message.append(" GRACIAS POR SU VISITA!!");
         data.put("message", message.toString());
-        data.put("date", new Date());
+        data.put("date", new Date().toString());
 
         response.setContentType("application/json");
         response.setStatus(401);
